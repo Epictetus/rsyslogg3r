@@ -1,0 +1,3 @@
+- Listens on port 514 for input from Heroku logplex (http://devcenter.heroku.com/articles/logging)
+- Saves heroku[nginx] lines to /var/log/heroku.log
+- Every hour, rotates heroku.log, restarts rsyslogd, bzip2's the rotated log and uploads it to s3
