@@ -2,7 +2,7 @@
     size 1
     postrotate
         bzip2 -9 -c /var/log/heroku.log.1 >/tmp/logrotate-heroku
-        /usr/bin/s3cmd put /tmp/logrotate-heroku s3://heroku.logs.urbandictionary.com/$(date +%Y/%m/%Y-%m-%d-%H-%M-%S).log.bz2
+        /usr/bin/s3cmd put /tmp/logrotate-heroku s3://`cat /home/ec2-user/bucketname`/$(date +%Y/%m/%Y-%m-%d-%H-%M-%S).log.bz2
         /sbin/service rsyslog restart
     endscript
 }
