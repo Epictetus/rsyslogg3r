@@ -20,6 +20,12 @@ file "/etc/cron.daily/logrotate" do
   action :delete
 end
 
-file "/root/.s3cfg" do
-  content IO.read("/home/ec2-user/.s3cfg")
+template "/etc/logrotate.d/heroku" do
+  source "/etc/logrotate.d/heroku.erb"
+  variables YAML.load_file("/home/ec2-user/soloist/config.yml")
+end
+
+template "/root/.s3cfg" do
+  source "s3cfg.erb"
+  variables YAML.load_file("/home/ec2-user/soloist/config.yml")
 end
