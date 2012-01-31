@@ -7,5 +7,6 @@
         TEMPFILE=/tmp/logrotate-$RANDOM.bz2
         bzip2 -9 -c /var/log/heroku.log.1 >$TEMPFILE
         /usr/bin/s3cmd put $TEMPFILE s3://<%= @bucket_name %>/$(date +%Y/%m/%Y-%m-%d-%H-%M-%S).log.bz2
+        rm -f $TEMPFILE
     endscript
 }
