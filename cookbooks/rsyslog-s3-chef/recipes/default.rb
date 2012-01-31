@@ -19,3 +19,7 @@ end
 file "/etc/cron.daily/logrotate" do
   action :delete
 end
+
+file "/root/.s3cfg" do
+  content IO.read("/home/ec2-user/.s3cfg")
+end
