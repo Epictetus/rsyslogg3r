@@ -8,7 +8,9 @@ bash "install s3cmd" do
   creates "/usr/bin/s3cmd"
 end
 
-# cookbook_file "/etc/rsyslog.conf" do
-#   source "rsyslog"
-#   mode "600"
-# end
+cookbook_file "/etc/rsyslog.conf" do
+  source "rsyslog.conf"
+  notifies :restart, "service[rsyslog]"
+end
+
+service "rsyslog"
