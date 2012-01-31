@@ -1,5 +1,6 @@
 /var/log/heroku.log {
     size 1
+    rotate 1
     postrotate
         /sbin/service rsyslog restart
 
