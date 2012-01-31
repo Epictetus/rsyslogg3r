@@ -8,9 +8,14 @@ bash "install s3cmd" do
   creates "/usr/bin/s3cmd"
 end
 
-cookbook_file "/etc/rsyslog.conf" do
-  source "rsyslog.conf"
+service "rsyslog"
+
+remote_directory "/etc" do
+  source "etc"
   notifies :restart, "service[rsyslog]"
+  files_mode "0600"
 end
 
-service "rsyslog"
+file "/etc/cron.daily/logrotate" do
+  action :delete
+end
