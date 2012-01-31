@@ -1,0 +1,4 @@
+cookbook_paths:
+- ./cookbooks
+recipes:
+- rsyslog-s3-chef::default
