@@ -9,11 +9,16 @@ bash "install s3cmd" do
 end
 
 service "rsyslog"
+service "crond"
 
-remote_directory "/etc" do
-  source "etc"
+remote_file "/etc/rsyslog.conf" do
   notifies :restart, "service[rsyslog]"
-  files_mode "0600"
+  mode "0600"
+end
+
+remote_file "/etc/cron.hourly/logrotate" do
+  notifies :restart, "service[crond]"
+  mode "0755"
 end
 
 file "/etc/cron.daily/logrotate" do
