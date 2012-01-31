@@ -1,8 +1,11 @@
 /var/log/heroku.log {
     size 1
     postrotate
-        bzip2 -9 -c /var/log/heroku.log.1 >/tmp/logrotate-heroku
-        /usr/bin/s3cmd put /tmp/logrotate-heroku s3://`cat /home/ec2-user/bucketname`/$(date +%Y/%m/%Y-%m-%d-%H-%M-%S).log.bz2
+        BUCKET_NAME=`ruby -ryaml -e'print YAML.load_file("/home/ec2-user/soloist/config.yml")["bucket_name"]'`
+        TEMPFILE=/tmp/logrotate-$RANDOM.bz2
+
         /sbin/service rsyslog restart
+        bzip2 -9 -c /var/log/heroku.log.1 >$TEMPFILE
+        /usr/bin/s3cmd put $TEMPFILE s3://`$BUCKET_NAME`/$(date +%Y/%m/%Y-%m-%d-%H-%M-%S).log.bz2
     endscript
 }
