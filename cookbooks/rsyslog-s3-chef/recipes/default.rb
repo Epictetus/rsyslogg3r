@@ -10,13 +10,23 @@ bash "install s3cmd" do
   creates "/usr/bin/s3cmd"
 end
 
+template "/root/.s3cfg" do
+  source "s3cfg.erb"
+  variables CONFIG
+end
+
+execute "test s3cmd" do
+  command "s3cmd ls s3://#{CONFIG['bucket_name']}"
+end
+
 service "rsyslog"
-service "crond"
 
 cookbook_file "/etc/rsyslog.conf" do
   notifies :restart, "service[rsyslog]"
   mode "0600"
 end
+
+service "crond"
 
 cookbook_file "/etc/cron.hourly/logrotate" do
   notifies :restart, "service[crond]"
@@ -30,13 +40,4 @@ end
 template "/etc/logrotate.d/heroku" do
   source "/etc/logrotate.d/heroku.erb"
   variables CONFIG
-end
-
-template "/root/.s3cfg" do
-  source "s3cfg.erb"
-  variables CONFIG
-end
-
-execute "test s3cmd" do
-  command "s3cmd ls s3://#{CONFIG['bucket_name']}"
 end
