@@ -9,6 +9,10 @@ task :tail do
   system! %[ssh -t #{CONFIG["host"]} "sudo tail -F /var/log/{messages,secure,cron}"]
 end
 
+task :ssh do
+  system! %[ssh #{CONFIG["host"]}]
+end
+
 def system!(*args)
   puts "-- #{args}"
   system(*args) or raise "system!(#{args}) failed"
