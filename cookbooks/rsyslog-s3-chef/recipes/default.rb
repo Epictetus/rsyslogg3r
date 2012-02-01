@@ -25,18 +25,18 @@ file "/etc/cron.daily/logrotate" do
   action :delete
 end
 
-soloist_config = YAML.load_file("/home/ec2-user/soloist/config.yml")
+CONFIG = YAML.load_file("/home/ec2-user/soloist/config.yml")
 
 template "/etc/logrotate.d/heroku" do
   source "/etc/logrotate.d/heroku.erb"
-  variables soloist_config
+  variables CONFIG
 end
 
 template "/root/.s3cfg" do
   source "s3cfg.erb"
-  variables soloist_config
+  variables CONFIG
 end
 
 execute "test s3cmd" do
-  command "s3cmd ls s3://#{soloist_config['bucket_name']}"
+  command "s3cmd ls s3://#{CONFIG['bucket_name']}"
 end
