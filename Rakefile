@@ -1,9 +1,14 @@
+require File.dirname(__FILE__) + '/config'
+
 task :default do
-  raise "REMOTE_HOST is not set" unless host = ENV['REMOTE_HOST']
-  system! %[rsync -az --delete --exclude .git -e ssh . #{host}:soloist]
-  system! %[ssh -t #{host} "cd soloist && sh -ex bootstrap.sh"]
+  required_keys = %w[bucket_name access_key secret_key host]
+  raise "#{required_keys.inspect} are required in config.yml" if required_keys.find { |key| CONFIG[key].nil? || CONFIG[key] == '' }
+  
+  system! %[rsync -az --delete --exclude .git -e ssh . #{CONFIG["host"]}:soloist]
+  system! %[ssh -t #{CONFIG["host"]} "cd soloist && sh -ex bootstrap.sh"]
 end
 
 def system!(*args)
-  system(*args) or raise "system failed! #{args.inspect}"
+  puts "-- #{args}"
+  system(*args) or raise "system!(#{args}) failed"
 end
