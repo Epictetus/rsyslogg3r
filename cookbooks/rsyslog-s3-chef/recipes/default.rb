@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../../config'
 
 bash "install s3cmd" do
-  cwd Chef::Config[:file_cache_path]
+  cwd Chef::Config[:cookbook_path].first + '/rsyslog-s3-chef/files/default'
   code <<-EOF
     tar xfz s3cmd-1.0.0.tar.gz
     cd s3cmd-1.0.0
