@@ -1,5 +1,8 @@
-Run `rake` to set up a remote server that:
+Run `rake` to set up a server that:
 
-- Listens on port 514 for input from Heroku logplex (http://devcenter.heroku.com/articles/logging)
-- Saves heroku[nginx] lines to /var/log/heroku.log
+- Runs rsyslog on port 514
+- Saves only heroku[nginx] lines to /var/log/heroku.log
 - Rotates heroku.log every hour, compresses the rotated log and uploads it to s3
+
+From a heroku app, run `heroku drains add http://YOURIP` to receive data from Heroku logplex
+http://devcenter.heroku.com/articles/logging
