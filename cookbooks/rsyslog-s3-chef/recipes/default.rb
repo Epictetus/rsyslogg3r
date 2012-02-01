@@ -37,8 +37,6 @@ template "/root/.s3cfg" do
   variables soloist_config
 end
 
-p soloist_config
-
 execute "test s3cmd" do
   command "s3cmd ls s3://#{soloist_config['bucket_name']}"
 end
