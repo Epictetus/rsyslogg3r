@@ -6,3 +6,8 @@
         sh -ex /root/postrotate.sh
     endscript
 }
+
+/var/log/logrotate.log {
+    rotate 1
+    daily
+}
