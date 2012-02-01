@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/../../../config'
+
 bash "install s3cmd" do
   cwd Chef::Config[:file_cache_path]
   code <<-EOF
@@ -24,8 +26,6 @@ end
 file "/etc/cron.daily/logrotate" do
   action :delete
 end
-
-CONFIG = YAML.load_file("/home/ec2-user/soloist/config.yml")
 
 template "/etc/logrotate.d/heroku" do
   source "/etc/logrotate.d/heroku.erb"
