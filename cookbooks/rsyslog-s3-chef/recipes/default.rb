@@ -13,12 +13,12 @@ end
 service "rsyslog"
 service "crond"
 
-remote_file "/etc/rsyslog.conf" do
+cookbook_file "/etc/rsyslog.conf" do
   notifies :restart, "service[rsyslog]"
   mode "0600"
 end
 
-remote_file "/etc/cron.hourly/logrotate" do
+cookbook_file "/etc/cron.hourly/logrotate" do
   notifies :restart, "service[crond]"
   mode "0755"
 end
