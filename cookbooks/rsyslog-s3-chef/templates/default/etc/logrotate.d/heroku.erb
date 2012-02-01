@@ -3,11 +3,6 @@
     size 1
     nodateext
     postrotate
-        /sbin/service rsyslog restart
-
-        TEMPFILE=/tmp/logrotate-$RANDOM.bz2
-        bzip2 -9 -c /var/log/heroku.log.1 >$TEMPFILE
-        /usr/bin/s3cmd put $TEMPFILE s3://<%= @bucket_name %>/$(date +%Y/%m/%Y-%m-%d-%H-%M-%S).log.bz2
-        rm -f $TEMPFILE
+        sh -ex /home/ec2-user/soloist/postrotate.sh
     endscript
 }
