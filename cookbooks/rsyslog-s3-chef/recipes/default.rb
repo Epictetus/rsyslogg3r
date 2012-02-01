@@ -20,19 +20,6 @@ execute "test s3cmd" do
   command "s3cmd ls s3://#{CONFIG['bucket_name']}"
 end
 
-cookbook_file "daemontools-0.76.tar.gz"
-
-bash "install daemontools" do
-  cwd Chef::Config[:cache_dir]
-  code <<-EOH
-    tar zxvf daemontools-0.76.tar.gz
-    cd admin/daemontools-0.76
-    perl -pi -e 's/extern int errno;/\#include <errno.h>/' src/error.h
-    package/install
-  EOH
-  creates "/usr/sbin/svstat"
-end
-
 service "rsyslog"
 
 cookbook_file "/etc/rsyslog.conf" do
