@@ -1,3 +1,4 @@
 command -v gem || { sudo yum install -y rubygems ruby-devel make gcc; }
-command -v soloist || { sudo gem install soloist-0.9.4.gem --no-ri --no-rdoc; }
+command -v bundle || { sudo gem install bundler-1.0.21.gem --no-ri --no-rdoc; }
+bundle install --local
 soloist
