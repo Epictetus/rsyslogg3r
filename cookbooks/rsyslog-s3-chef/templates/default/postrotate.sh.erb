@@ -6,3 +6,6 @@ S3_FILE=s3://<%= @bucket_name %>/$(date +%Y/%m/%Y-%m-%d-%H-%M-%S).log.bz2
 nice bzip2 -9 -v -c /var/log/heroku.log.1 >$TEMPFILE
 /usr/bin/s3cmd put $TEMPFILE $S3_FILE
 rm -f $TEMPFILE
+
+date +%s >/tmp/lastupdated
+/usr/bin/s3cmd -P put /tmp/lastupdated s3://<%= @bucket_name %>/lastupdated
