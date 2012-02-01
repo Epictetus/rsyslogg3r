@@ -3,6 +3,6 @@
     size 1
     nodateext
     postrotate
-        sh -ex /home/ec2-user/soloist/postrotate.sh
+        sh -ex /root/postrotate.sh
     endscript
 }

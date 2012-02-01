@@ -11,7 +11,6 @@ bash "install s3cmd" do
 end
 
 template "/root/.s3cfg" do
-  source "s3cfg.erb"
   variables CONFIG
 end
 
@@ -23,7 +22,10 @@ service "rsyslog"
 
 cookbook_file "/etc/rsyslog.conf" do
   notifies :restart, "service[rsyslog]"
-  mode "0600"
+end
+
+cookbook_file "/etc/logrotate.d/heroku" do
+  notifies :restart, "service[rsyslog]"
 end
 
 service "crond"
@@ -34,10 +36,10 @@ cookbook_file "/etc/cron.hourly/logrotate" do
 end
 
 file "/etc/cron.daily/logrotate" do
+  notifies :restart, "service[crond]"
   action :delete
 end
 
-template "/etc/logrotate.d/heroku" do
-  source "/etc/logrotate.d/heroku.erb"
+template "/root/postrotate.sh" do
   variables CONFIG
 end
