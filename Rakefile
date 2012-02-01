@@ -6,7 +6,7 @@ task :default do
 end
 
 task :tail do
-  system! %[ssh -t #{CONFIG["host"]} "sudo tail -F /var/log/{messages,secure,cron}"]
+  system! %[ssh -t #{CONFIG["host"]} "sudo tail -F /var/log/{messages,secure,cron,logrotate.log}"]
 end
 
 task :ssh do
