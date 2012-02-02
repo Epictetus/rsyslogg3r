@@ -12,7 +12,7 @@ bash "install s3cmd" do
   creates "/usr/bin/s3cmd"
 end
 
-template "/root/.s3cfg" do
+template "/.s3cfg" do
   variables CONFIG
 end
 
