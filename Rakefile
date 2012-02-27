@@ -19,6 +19,8 @@ task :ssh do
   sh %[ssh #{CONFIG["host"]}]
 end
 
-task :create do
-  sh %[ec2-run-instances ami-31814f58 -t c1.medium]
+task :create, :key do |task, args|
+  raise "specify the key pair to use with #{task.name}[KEYPAIR]" unless args.key
+  sh %[ec2-run-instances ami-31814f58 -t c1.medium -k #{args.key}]
+  sh %[ec2-authorize default -P tcp -p 514 -u 098166147350 -o logplex; true]
 end
