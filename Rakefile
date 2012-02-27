@@ -12,3 +12,7 @@ end
 task :ssh do
   sh %[ssh #{CONFIG["host"]}]
 end
+
+task :create do
+  sh %[ec2-run-instances ami-31814f58 -t c1.medium]
+end
